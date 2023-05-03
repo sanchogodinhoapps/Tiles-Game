@@ -1,0 +1,312 @@
+@font-face {
+    font-family: 'Barlow';
+    src: url('/fonts/Barlow/Barlow-Medium.ttf');
+}
+
+@font-face {
+    font-family: '04b_19';
+    src: url('/fonts/04b_19/04B_19__.TTF');
+}
+
+@font-face {
+    font-family: 'Mintsans';
+    src: url('/fonts/mintsans/MintSansRegular.otf');
+}
+
+.loading-screen {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    font-family: 'Barlow', sans-serif;
+    background-color: white;
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 30px;
+    gap: 10px;
+}
+
+.logo {
+    width: 90px;
+    pointer-events: none;
+}
+
+body {
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    user-select: none;
+    overflow: hidden;
+}
+
+.credits {
+    width: calc(100% - 10px);
+    padding: 5px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: white;
+    z-index: 99999;
+    font-family: 'Barlow', sans-serif;
+}
+
+.return-button {
+    width: calc(100% - 25px);
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    padding: 10px;
+    background-color: blueviolet;
+    margin-left: 2.5px;
+    margin-top: 20px;
+    border-radius: 5px;
+    transition: all .10s linear;
+}
+
+.return-button:active {
+    background-color: rgb(124, 37, 206);
+}
+
+.start-screen {
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.app-name {
+    font-size: 45px;
+    font-family: '04b_19', sans-serif;
+    margin-bottom: 50px;
+}
+
+.section-text {
+    font-family: 'Barlow', sans-serif;
+    font-size: 17px;
+}
+
+.start-screen .option {
+    color: white;
+    font-family: 'Mintsans', sans-serif;
+    width: calc(100% - 30px);
+    max-width: 300px;
+    text-align: center;
+    padding: 10px;
+    background-color: grey;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all .10s linear;
+}
+
+.start-screen .option:active {
+    background-color: rgb(141, 141, 141);
+}
+
+.view-credits {
+    margin-top: 50px !important;
+    background-color: green !important;
+}
+
+.view-credits:active {
+    background-color: rgb(1, 112, 1) !important;
+}
+
+.end-screen {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: white;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow', sans-serif;
+}
+
+.start-btn {
+    width: calc(100% - 30px);
+    border-radius: 10px;
+    max-width: 500px;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 17px;
+    background-color: green;
+    cursor: pointer;
+}
+
+.start-btn.inactive {
+    visibility: hidden;
+}
+
+.start-btn:active {
+    background-color: rgb(0, 114, 0);
+}
+
+.message {
+    width: calc(100% - 20px);
+    margin: 10px;
+    text-align: center;
+    font-size: 50px;
+}
+
+.high-score {
+    width: 100%;
+    text-align: center;
+    font-size: 25px;
+    margin-top: 20px;
+}
+
+.opt-btn {
+    transition: all .10s linear;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+    max-width: 500px;
+    color: white;
+    width: calc(100% - 25px);
+    padding: 10px;
+}
+
+.play-again-btn {
+    background-color: rgb(95, 211, 0);
+    margin-top: 30px;
+}
+
+.play-again-btn:active {
+    background-color: rgb(91, 201, 1);
+}
+
+.change-mode-btn {
+    background-color: rgb(0, 74, 211);
+    margin-top: 5px;
+}
+
+.change-mode-btn:active {
+    background-color: rgb(2, 67, 187);
+}
+
+.container {
+    width: 100%;
+    height: calc(100% - 50px);
+}
+
+.scores {
+    width: 100%;
+    height: 50px;
+}
+
+.all-scores {
+    width: calc(100% - 50px);
+    height: 100%;
+    float: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    font-size: 20px;
+    font-family: 'Barlow', cursive;
+}
+
+.tiles {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+
+.tile {
+    width: 100%;
+    height: 100%;
+    border: 1px solid;
+    background-color: #ccc;
+}
+
+.pause-button {
+    width: 50px;
+    height: 100%;
+    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pause img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+}
+
+.pause-screen {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgb(255, 255, 255, 0.8);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.pause-screen .btn {
+    width: calc(100% - 25px);
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+    max-width: 500px;
+    color: white;
+    margin-top: 5px;
+    transition: all .10s linear;
+    font-family: 'Barlow', sans-serif;
+}
+
+.pause-screen .resume {
+    background-color: rgb(234, 0, 255);
+}
+
+.pause-screen .resume:active {
+    background-color: rgb(209, 0, 228);
+}
+
+.pause-screen .play-again {
+    background-color: rgb(95, 211, 0);
+}
+
+.pause-screen .play-again:active {
+    background-color: rgb(91, 201, 1);
+}
+
+.pause-screen .change-mode {
+    background-color: rgb(0, 74, 211);
+}
+
+.pause-screen .change-mode:active {
+    background-color: rgb(2, 67, 187);
+}
+
+* {
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
