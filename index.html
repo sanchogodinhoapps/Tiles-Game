@@ -13,27 +13,27 @@
     <meta name="keywords" content="tiles game, free tiles game, free game, game, online game">
 
     <!-- Verification & Statistics -->
-    <meta name="google-site-verification" content="vc8YruMBo8wmjrmg6mtO_LQMzCawvsOuKIBWheb3Bu4" />
+    <!-- <meta name="google-site-verification" content="vc8YruMBo8wmjrmg6mtO_LQMzCawvsOuKIBWheb3Bu4" />
     <script type="text/javascript">
         (function (c, l, a, r, i, t, y) {
             c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
             t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
             y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
         })(window, document, "clarity", "script", "gy2r6d5ui3");
-    </script>
+    </script> -->
 </head>
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7YB4VB4BJG"></script>
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-7YB4VB4BJG"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
 
     gtag('config', 'G-7YB4VB4BJG');
-</script>
+</script> -->
 
 <body>
-    <audio loop class="background-music" src="/music/background.mp3"> </audio>
+    <audio loop preload="auto" class="background-music" src="/music/background.mp3"> </audio>
 
     <div class="loading-screen">
         <img src="/images/icon.png" alt="" class="logo">
@@ -64,10 +64,16 @@
     <div class="start-screen">
         <div class="app-name">Tiles Game</div>
         <div class="section-text">Select Difficulty:</div>
+        <div class="option" onclick="startSuperEasy();">Super Easy</div>
         <div class="option" onclick="startEasy();">Easy</div>
         <div class="option" onclick="startMedium();">Medium</div>
         <div class="option" onclick="startHard();">Hard</div>
+        <div class="option" onclick="startSuperHard();">Super Hard</div>
         <div class="option view-credits" onclick="$('.credits').fadeIn(500);">See Credits</div>
+        <div class="how-to"
+            style="width:calc(100% - 20px);font-family:'Barlow',sans-serif;text-align:center;margin-top:10px;">Click The
+            Red Tiles When They Appear To Increase Your Score,<br>You Have 1 Minute Of Time Until The Game Ends!
+        </div>
     </div>
 
     <div class="end-screen">
@@ -111,6 +117,10 @@
 </body>
 
 <script>
+    if (window.location.protocol == 'http:') {
+        window.location.protocol = 'https:';
+    }
+
     function blobToBase64(blob) {
         return new Promise((resolve, _) => {
             const reader = new FileReader();
@@ -151,39 +161,30 @@
         if (highscores != null) {
             try {
                 highscores = JSON.parse(highscores);
-                if (mode == 'easy') {
-                    if (highscores['easy'] < score) {
-                        highscores['easy'] = score;
+                if (highscores[mode] != null) {
+                    if (highscores[mode] < score) {
+                        highscores[mode] = score;
                         localStorage.setItem('highscores', JSON.stringify(highscores));
                     }
-                    return highscores['easy'];
+                    return highscores[mode];
                 }
-                else if (mode == 'medium') {
-                    if (highscores['medium'] < score) {
-                        highscores['medium'] = score;
-                        localStorage.setItem('highscores', JSON.stringify(highscores));
-                    }
-                    return highscores['medium'];
-                }
-                else if (mode == 'hard') {
-                    if (highscores['hard'] < score) {
-                        highscores['hard'] = score;
-                        localStorage.setItem('highscores', JSON.stringify(highscores));
-                    }
-                    return highscores['hard'];
+                else {
+                    localStorage.setItem('highscores', JSON.stringify({ 'super-easy': 0, easy: 0, medium: 0, hard: 0, 'super-hard': 0 }));
+                    return 0;
                 }
             }
             catch (err) {
-                localStorage.setItem('highscores', JSON.stringify({ easy: 0, medium: 0, hard: 0 }));
+                localStorage.setItem('highscores', JSON.stringify({ 'super-easy': 0, easy: 0, medium: 0, hard: 0, 'super-hard': 0 }));
+                return getHighScore(mode, score);
             }
         }
         else {
-            localStorage.setItem('highscores', JSON.stringify({ easy: 0, medium: 0, hard: 0 }));
+            localStorage.setItem('highscores', JSON.stringify({ 'super-easy': 0, easy: 0, medium: 0, hard: 0, 'super-hard': 0 }));
             return getHighScore(mode, score);
         }
     }
 
-    const startEasy = () => {
+    const startSuperEasy = () => {
         setTimeout(() => {
             if (running == false) {
                 if (window.wasPaused == false) {
@@ -212,6 +213,50 @@
                             window.running = false;
                             clearInterval(window.currentTimer);
                             clearInterval(window.tilesTimer);
+                            $('.message').text($('.message').text().replaceAll('{mode}', 'Super Easy'));
+                            $('.message').text($('.message').text().replaceAll('{score}', window.score));
+                            $('.high-score').text($('.high-score').text().replaceAll('{high-score}', getHighScore('super-easy', window.score)));
+                            $('.end-screen').fadeIn(500);
+                        }
+                        else {
+                            window.seconds++;
+                            document.querySelector('.time').innerText = 'Seconds: ' + seconds;
+                        }
+                    }
+                }, 1000);
+            }
+        }, 500);
+    }
+
+    const startEasy = () => {
+        setTimeout(() => {
+            if (running == false) {
+                if (window.wasPaused == false) {
+                    $('.start-screen').fadeOut(500);
+                    window.score = 0;
+                    window.seconds = 0;
+                }
+                window.wasPaused = false;
+                window.running = true;
+                window.tilesTimer = setInterval(() => {
+                    if (window.paused == false) {
+                        let randomTile = Math.floor(Math.random() * 9);
+                        document.querySelectorAll('.tile')[randomTile].style.backgroundColor = 'red';
+                        document.querySelectorAll('.tile')[randomTile].setAttribute('onclick', 'window.score++;this.removeAttribute("onclick");this.backgroundColor="#ccc";new Audio(window.ClickAudio).play();');
+                        document.querySelector('.score').innerText = 'Score: ' + window.score;
+                        setTimeout(() => {
+                            document.querySelectorAll('.tile')[randomTile].style.backgroundColor = '#ccc';
+                            document.querySelectorAll('.tile')[randomTile].removeAttribute('onclick');
+                        }, 650);
+                    }
+                }, 650);
+
+                window.currentTimer = setInterval(() => {
+                    if (window.paused == false) {
+                        if (window.seconds == 60) {
+                            window.running = false;
+                            clearInterval(window.currentTimer);
+                            clearInterval(window.tilesTimer);
                             $('.message').text($('.message').text().replaceAll('{mode}', 'Easy'));
                             $('.message').text($('.message').text().replaceAll('{score}', window.score));
                             $('.high-score').text($('.high-score').text().replaceAll('{high-score}', getHighScore('easy', window.score)));
@@ -226,6 +271,7 @@
             }
         }, 500);
     }
+
     const startMedium = () => {
         setTimeout(() => {
             if (running == false) {
@@ -289,9 +335,9 @@
                         setTimeout(() => {
                             document.querySelectorAll('.tile')[randomTile].style.backgroundColor = '#ccc';
                             document.querySelectorAll('.tile')[randomTile].removeAttribute('onclick');
-                        }, 300);
+                        }, 425);
                     }
-                }, 300);
+                }, 425);
 
                 window.currentTimer = setInterval(() => {
                     if (window.paused == false) {
@@ -314,20 +360,49 @@
         }, 500);
     }
 
-    $('.play-again-btn').click(() => {
-        if (window.mode != null) {
-            $('.end-screen').fadeOut(500);
-            if (window.mode == 'easy') {
-                startEasy();
+    const startSuperHard = () => {
+        setTimeout(() => {
+            if (running == false) {
+                if (window.wasPaused == false) {
+                    $('.start-screen').fadeOut(500);
+                    window.score = 0;
+                    window.seconds = 0;
+                }
+                window.wasPaused = false;
+                window.running = true;
+                window.tilesTimer = setInterval(() => {
+                    if (window.paused == false) {
+                        let randomTile = Math.floor(Math.random() * 9);
+                        document.querySelectorAll('.tile')[randomTile].style.backgroundColor = 'red';
+                        document.querySelectorAll('.tile')[randomTile].setAttribute('onclick', 'window.score++;this.removeAttribute("onclick");this.backgroundColor="#ccc";new Audio(window.ClickAudio).play();');
+                        document.querySelector('.score').innerText = 'Score: ' + window.score;
+                        setTimeout(() => {
+                            document.querySelectorAll('.tile')[randomTile].style.backgroundColor = '#ccc';
+                            document.querySelectorAll('.tile')[randomTile].removeAttribute('onclick');
+                        }, 300);
+                    }
+                }, 300);
+
+                window.currentTimer = setInterval(() => {
+                    if (window.paused == false) {
+                        if (window.seconds == 60) {
+                            window.running = false;
+                            clearInterval(window.currentTimer);
+                            clearInterval(window.tilesTimer);
+                            $('.message').text($('.message').text().replaceAll('{mode}', 'Super Hard'));
+                            $('.message').text($('.message').text().replaceAll('{score}', window.score));
+                            $('.high-score').text($('.high-score').text().replaceAll('{high-score}', getHighScore('super-hard', window.score)));
+                            $('.end-screen').fadeIn(500);
+                        }
+                        else {
+                            window.seconds++;
+                            document.querySelector('.time').innerText = 'Seconds: ' + seconds;
+                        }
+                    }
+                }, 1000);
             }
-            else if (window.mode == 'medium') {
-                startMedium();
-            }
-            else if (window.mode == 'hard') {
-                startHard();
-            }
-        }
-    });
+        }, 500);
+    }
 
     $('.change-mode-btn').click(() => {
         $('.start-screen').fadeIn(500, () => {
@@ -342,20 +417,9 @@
     });
 
     $('.btn.resume').click(() => {
-        $('.pause-screen').fadeOut(500);
-        window.paused = false;
-        if (window.mode != null) {
-            $('.end-screen').fadeOut(500);
-            if (window.mode == 'easy') {
-                startEasy();
-            }
-            else if (window.mode == 'medium') {
-                startMedium();
-            }
-            else if (window.mode == 'hard') {
-                startHard();
-            }
-        }
+        $('.pause-screen').fadeOut(500, () => {
+            window.paused = false;
+        });
     });
 
     $('.btn.change-mode').click(() => {
@@ -379,19 +443,6 @@
         $('.score').text('Score: 0');
         window.score = 0;
         window.seconds = 0;
-
-        if (window.mode != null) {
-            $('.pause-screen').fadeOut(500);
-            if (window.mode == 'easy') {
-                startEasy();
-            }
-            else if (window.mode == 'medium') {
-                startMedium();
-            }
-            else if (window.mode == 'hard') {
-                startHard();
-            }
-        }
     });
 
     (async () => {
