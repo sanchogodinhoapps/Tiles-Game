@@ -1,16 +1,16 @@
 @font-face {
     font-family: 'Barlow';
-    src: url('/fonts/Barlow/Barlow-Medium.ttf');
+    src: url('../fonts/Barlow/Barlow-Medium.ttf');
 }
 
 @font-face {
     font-family: '04b_19';
-    src: url('/fonts/04b_19/04B_19__.TTF');
+    src: url('../fonts/04b_19/04B_19__.TTF');
 }
 
 @font-face {
     font-family: 'Mintsans';
-    src: url('/fonts/mintsans/MintSansRegular.otf');
+    src: url('../fonts/mintsans/MintSansRegular.otf');
 }
 
 html {

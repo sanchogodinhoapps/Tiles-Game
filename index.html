@@ -6,11 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tiles Game</title>
-    <script src="/js/jquery.min.js"></script>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="shortcut icon" href="/images/icon.png" type="image/x-icon">
+    <script src="./js/jquery.min.js"></script>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="shortcut icon" href="./images/icon.png" type="image/x-icon">
     <meta name="description" content="Tiles Game is a free and fun game to keep you entertained always!">
     <meta name="keywords" content="tiles game, free tiles game, free game, game, online game">
+    <meta name="google-site-verification" content="WoiQrhacQjHOe053I0SZ78HjU0NgVeECyUHGXRV0dQI" />
 
     <!-- Verification & Statistics -->
     <meta name="google-site-verification" content="vc8YruMBo8wmjrmg6mtO_LQMzCawvsOuKIBWheb3Bu4" />
@@ -19,7 +20,7 @@
             c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
             t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
             y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
-        })(window, document, "clarity", "script", "gy2r6d5ui3");
+        })(window, document, "clarity", "script", "h7jq1uergj");
     </script>
 </head>
 
@@ -33,10 +34,10 @@
 </script>
 
 <body>
-    <audio loop preload="auto" class="background-music" src="/music/background.mp3"> </audio>
+    <audio loop preload="auto" class="background-music" src="./music/background.mp3"> </audio>
 
     <div class="loading-screen">
-        <img src="/images/icon.png" alt="" class="logo">
+        <img src="./images/icon.png" alt="" class="logo">
         Tiles Game
         <div class="start-btn inactive">Start Game</div>
     </div>
@@ -106,7 +107,7 @@
                 <div class="time">Seconds: 0</div>
             </div>
             <div class="pause-button">
-                <div class="pause"><img src="/images/pause-icon.png" alt=""></div>
+                <div class="pause"><img src="./images/pause-icon.png" alt=""></div>
             </div>
         </div>
         <div class="tiles">
@@ -136,7 +137,7 @@
         });
     }
 
-    fetch('/music/click.mp3').then(res => res.blob()).then(blob => {
+    fetch('./music/click.mp3').then(res => res.blob()).then(blob => {
         blobToBase64(blob).then(audioBlobData => {
             window.ClickAudio = audioBlobData;
         });
@@ -441,6 +442,18 @@
 
     $('.btn.play-again').click(() => {
         $('.pause-screen').fadeOut(500);
+        window.wasPaused = false;
+        window.running = false;
+        window.paused = false;
+        $('.time').text('Seconds: 0');
+        $('.score').text('Score: 0');
+        window.score = 0;
+        window.seconds = 0;
+    });
+
+
+    $('.play-again-btn').click(() => {
+        $('.end-screen').fadeOut(500);
         window.wasPaused = false;
         window.running = false;
         window.paused = false;
