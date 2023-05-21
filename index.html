@@ -11,7 +11,6 @@
     <link rel="shortcut icon" href="/images/icon.png" type="image/x-icon">
     <meta name="description" content="Tiles Game is a free and fun game to keep you entertained always!">
     <meta name="keywords" content="tiles game, free tiles game, free game, game, online game">
-    <script src="https://sdk.crazygames.com/crazygames-sdk-v2.js"></script>
 
     <!-- Verification & Statistics -->
     <meta name="google-site-verification" content="vc8YruMBo8wmjrmg6mtO_LQMzCawvsOuKIBWheb3Bu4" />
@@ -40,7 +39,6 @@
         <img src="/images/icon.png" alt="" class="logo">
         Tiles Game
         <div class="start-btn inactive">Start Game</div>
-        <div id="loader-ad" style="width:320px;height:50px;margin-top:15px;"></div>
     </div>
 
     <div class="credits">
@@ -61,8 +59,6 @@
         <a target="_blank"
             href="https://pixabay.com/sound-effects/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=music&amp;utm_content=14575">Pixabay</a>
         <div class="return-button" onclick="$('.credits').fadeOut(500);">Return To Game</div>
-
-        <div id="credits-ad" style="width:320px;height:50px;margin-top:10px;"></div>
     </div>
 
     <div class="start-screen">
@@ -73,14 +69,18 @@
         <div class="option" onclick="startMedium();">Medium</div>
         <div class="option" onclick="startHard();">Hard</div>
         <div class="option" onclick="startSuperHard();">Super Hard</div>
-        <div class="option view-credits"
-            onclick="$('.credits').fadeIn(500); window.CrazyGames.SDK.banner.requestBanner({id: 'credits-ad',width: 320,height: 50});">
+        <div class="option view-credits" onclick="$('.credits').fadeIn(500);">
             See Credits</div>
+        <a href="https://sg-apps.itch.io/tiles-game/donate"
+            style="all:unset;color:blue;cursor:pointer;user-select:none;font-family:'Barlow',sans-serif;"
+            target="_blank">Click Here To Support This Game With Money</a>
+        <a href="https://sanchogodinhoapps.github.io/Tiles-Game/donate"
+            style="all:unset;color:blue;cursor:pointer;user-select:none;font-family:'Barlow',sans-serif;"
+            target="_blank">Click Here To Support Using Ads</a>
         <div class="how-to"
             style="width:calc(100% - 20px);font-family:'Barlow',sans-serif;text-align:center;margin-top:10px;">Click The
             Red Tiles When They Appear To Increase Your Score,<br>You Have 1 Minute Of Time Until The Game Ends!
         </div>
-        <div id="start-screen-ad" style="width:468px;height:60px;margin-top:10px;"></div>
     </div>
 
     <div class="end-screen">
@@ -90,7 +90,6 @@
         <div class="high-score">High Score: {high-score}</div>
         <div class="opt-btn play-again-btn">Play Again</div>
         <div class="opt-btn change-mode-btn">Go Home</div>
-        <div id="end-screen-ad" style="width:468px;height:60px;margin-top:15px;"></div>
     </div>
 
     <div class="pause-screen">
@@ -125,16 +124,9 @@
 </body>
 
 <script>
-    window.CrazyGames.SDK.banner;
     if (!window.location.href.includes('http://localhost') && window.location.protocol == 'http:') {
         window.location.protocol = 'https:';
     }
-
-    window.CrazyGames.SDK.banner.requestBanner({
-        id: 'loader-ad',
-        width: 320,
-        height: 50,
-    });
 
     function blobToBase64(blob) {
         return new Promise((resolve, _) => {
@@ -160,13 +152,7 @@
             $('.start-btn').css('transition', 'all .10 linear');
         });
         $('.start-btn').click(() => {
-            $('.loading-screen').fadeOut(500, () => {
-                window.CrazyGames.SDK.banner.requestBanner({
-                    id: 'start-screen-ad',
-                    width: 468,
-                    height: 60,
-                });
-            });
+            $('.loading-screen').fadeOut(500);
             $('.background-music')[0].play();
         });
     });
@@ -184,7 +170,6 @@
                     if (highscores[mode] < score) {
                         highscores[mode] = score;
                         localStorage.setItem('highscores', JSON.stringify(highscores));
-                        window.CrazyGames.SDK.game.happytime();
                     }
                     return highscores[mode];
                 }
@@ -236,13 +221,7 @@
                             $('.message').text($('.message').text().replaceAll('{mode}', 'Super Easy'));
                             $('.message').text($('.message').text().replaceAll('{score}', window.score));
                             $('.high-score').text($('.high-score').text().replaceAll('{high-score}', getHighScore('super-easy', window.score)));
-                            $('.end-screen').fadeIn(500, () => {
-                                window.CrazyGames.SDK.banner.requestBanner({
-                                    id: 'end-screen-ad',
-                                    width: 468,
-                                    height: 60,
-                                });
-                            });
+                            $('.end-screen').fadeIn(500);
                         }
                         else {
                             window.seconds++;
@@ -286,13 +265,7 @@
                             $('.message').text($('.message').text().replaceAll('{mode}', 'Easy'));
                             $('.message').text($('.message').text().replaceAll('{score}', window.score));
                             $('.high-score').text($('.high-score').text().replaceAll('{high-score}', getHighScore('easy', window.score)));
-                            $('.end-screen').fadeIn(500, () => {
-                                window.CrazyGames.SDK.banner.requestBanner({
-                                    id: 'end-screen-ad',
-                                    width: 468,
-                                    height: 60,
-                                });
-                            });
+                            $('.end-screen').fadeIn(500);
                         }
                         else {
                             window.seconds++;
@@ -336,13 +309,7 @@
                             $('.message').text($('.message').text().replaceAll('{mode}', 'Medium'));
                             $('.message').text($('.message').text().replaceAll('{score}', window.score));
                             $('.high-score').text($('.high-score').text().replaceAll('{high-score}', getHighScore('medium', window.score)));
-                            $('.end-screen').fadeIn(500, () => {
-                                window.CrazyGames.SDK.banner.requestBanner({
-                                    id: 'end-screen-ad',
-                                    width: 468,
-                                    height: 60,
-                                });
-                            });
+                            $('.end-screen').fadeIn(500);
                         }
                         else {
                             window.seconds++;
@@ -386,13 +353,7 @@
                             $('.message').text($('.message').text().replaceAll('{mode}', 'Hard'));
                             $('.message').text($('.message').text().replaceAll('{score}', window.score));
                             $('.high-score').text($('.high-score').text().replaceAll('{high-score}', getHighScore('hard', window.score)));
-                            $('.end-screen').fadeIn(500, () => {
-                                window.CrazyGames.SDK.banner.requestBanner({
-                                    id: 'end-screen-ad',
-                                    width: 468,
-                                    height: 60,
-                                });
-                            });
+                            $('.end-screen').fadeIn(500);
                         }
                         else {
                             window.seconds++;
@@ -436,13 +397,7 @@
                             $('.message').text($('.message').text().replaceAll('{mode}', 'Super Hard'));
                             $('.message').text($('.message').text().replaceAll('{score}', window.score));
                             $('.high-score').text($('.high-score').text().replaceAll('{high-score}', getHighScore('super-hard', window.score)));
-                            $('.end-screen').fadeIn(500, () => {
-                                window.CrazyGames.SDK.banner.requestBanner({
-                                    id: 'end-screen-ad',
-                                    width: 468,
-                                    height: 60,
-                                });
-                            });
+                            $('.end-screen').fadeIn(500);
                         }
                         else {
                             window.seconds++;

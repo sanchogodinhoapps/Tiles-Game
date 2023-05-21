@@ -13,6 +13,10 @@
     src: url('/fonts/mintsans/MintSansRegular.otf');
 }
 
+html {
+    overflow: hidden;
+}
+
 .loading-screen {
     width: 100vw;
     height: 100vh;
@@ -91,7 +95,6 @@ body {
 .app-name {
     font-size: 45px;
     font-family: '04b_19', sans-serif;
-    margin-bottom: 50px;
 }
 
 .section-text {
